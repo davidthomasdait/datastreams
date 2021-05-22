@@ -26,7 +26,7 @@ async function run(config, context, timeframe, fetcher) {
         const check = obj.series[0];
         const name = check.id.split(' Response Time ')[0];
         const props = check.data.reduce((row, datum) => {
-            const options = { day: 'numeric', month: 'short', hour: 'numeric', minute: 'numeric' };
+            const options = { day: 'numeric', month: 'short' };
             const key = new Date(datum.timestamp).toLocaleString('en-GB', options);
             row[key] = datum.value;
             return row;
