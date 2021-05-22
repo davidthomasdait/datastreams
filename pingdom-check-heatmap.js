@@ -8,7 +8,7 @@ async function run(config, context, timeframe, fetcher) {
                 }
                 data = [context];
         } else {
-                const limit = config.vars?.limit || 10;
+                const limit = (config.vars && config.vars.limit) || 10;
                 const gremlinQuery = 'g.V().has("sourceName", sourceName).limit(limit).valueMap(true)';
                 const bindings = { sourceName: 'Pingdom', limit };
                 const graphConfig = { gremlinQuery, bindings };
