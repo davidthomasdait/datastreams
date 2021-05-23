@@ -14,8 +14,6 @@ async function getGraphNodes(config, context, timeframe, fetcher) {
 }
 
 async function run(config, context, timeframe, fetcher) {
-    console.log('timeframe.enum:', typeof timeframe.enum, timeframe.enum);
-
     /* Determine the context (Pingdom graph nodes) for the Pingdom data request */
     const nodes = await getGraphNodes(config, context, timeframe, fetcher);
 
@@ -32,8 +30,10 @@ async function run(config, context, timeframe, fetcher) {
         const check = obj.series[0];
         const name = check.id.split(' Response Time ')[0];
         const props = check.data.reduce((row, datum) => {
-            const options = { day: 'numeric', month: 'short' };
-            const key = new Date(datum.timestamp).toLocaleDateString('en-GB', options);
+            const options = timeframe.includes('day') ?
+                { day: 'numeric', month: 'short' } :
+                { hour: 'numeric', minute: 'numeric'};
+            const key = new Date(datum.timestamp).toLocaleString('en-GB', options);
             row[key] = datum.value;
             return row;
         }, {});
