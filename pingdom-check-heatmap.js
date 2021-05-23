@@ -25,7 +25,7 @@ async function run(config, context, timeframe, fetcher) {
         return fetcher('pingdom', pingdomConfig, node, timeframe);
     }));
 
-    /* Transform the Pingdom timeseries data to that required by a heatmap */
+    /* Transform the Pingdom timeseries data to that required by a Heatmap */
     return data.reduce((final, obj) => {
         const check = obj.series[0];
         const name = check.id.split(' Response Time ')[0];
