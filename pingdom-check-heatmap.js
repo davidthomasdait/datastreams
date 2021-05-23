@@ -14,7 +14,8 @@ async function getGraphNodes(config, context, timeframe, fetcher) {
 }
 
 async function run(config, context, timeframe, fetcher) {
-    console.log('timeframe.enum:', typeof timeframe.enum, timeframe.enum);
+    const str = timeframe.enum;
+    console.log('timeframe.enum:', typeof str, str);
 
     /* Determine the context (Pingdom graph nodes) for the Pingdom data request */
     const nodes = await getGraphNodes(config, context, timeframe, fetcher);
