@@ -1,18 +1,3 @@
-async function getGraphNodes(config, context, timeframe, fetcher) {
-    if (context.sourceId && context.sourceName) {
-        if (context.sourceName[0] !== 'Pingdom') {
-            throw new Error('Object is not a Pingdom check');
-        }
-        return [context];
-    } else {
-        const limit = (config.vars && config.vars.limit) || 10;
-        const gremlinQuery = 'g.V().has("sourceName", sourceName).limit(limit).valueMap(true)';
-        const bindings = { sourceName: 'Pingdom', limit };
-        const graphConfig = { gremlinQuery, bindings };
-        return fetcher('graph-custom', graphConfig, context, timeframe);
-    }
-}
-
 async function run(config, context, timeframe, fetcher) {
     try {
         /* Determine the context (Pingdom graph nodes) for the Pingdom data request */
@@ -42,5 +27,20 @@ async function run(config, context, timeframe, fetcher) {
     } catch (err) {
         console.error(err);
         throw err;
+    }
+}
+
+async function getGraphNodes(config, context, timeframe, fetcher) {
+    if (context.sourceId && context.sourceName) {
+        if (context.sourceName[0] !== 'Pingdom') {
+            throw new Error('Object is not a Pingdom check');
+        }
+        return [context];
+    } else {
+        const limit = (config.vars && config.vars.limit) || 10;
+        const gremlinQuery = 'g.V().has("sourceName", sourceName).limit(limit).valueMap(true)';
+        const bindings = { sourceName: 'Pingdom', limit };
+        const graphConfig = { gremlinQuery, bindings };
+        return fetcher('graph-custom', graphConfig, context, timeframe);
     }
 }
