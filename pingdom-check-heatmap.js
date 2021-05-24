@@ -20,9 +20,7 @@ async function run(config, context, timeframe, fetcher) {
 
         /* Get the Pingdom timeseries data for the Pingdom graph nodes */
         const data = await Promise.all(nodes.map(async node => {
-            const pingdomConfig = {
-                    id: node.sourceId[0]
-            }
+            const pingdomConfig = { id: node.sourceId[0] };
             return fetcher('pingdom', pingdomConfig, node, timeframe);
         }));
 
