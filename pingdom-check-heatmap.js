@@ -31,7 +31,7 @@ async function run(config, context, timeframe, fetcher) {
             const check = obj.series[0];
             const name = check.id.split(' Response Time ')[0];
             const props = check.data.reduce((row, datum) => {
-                const options = timeframe.enum.includes('day') ?
+                const options = timeframe.enum && timeframe.enum.includes('day') ?
                     { day: 'numeric', month: 'short' } :
                     { hour: 'numeric', minute: 'numeric'};
                 const key = new Date(datum.timestamp).toLocaleString('en-GB', options);
